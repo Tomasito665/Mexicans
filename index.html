@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Do not open the door</title>
+
+  <meta property="og:image" content="http://www.mexicans.eu/assets/img/preview.jpg" />
+  <meta property="og:title" content="Do not open the door" />
+  <meta property="og:description" content="Don't you dare..." />
+
+  <link rel="shortcut icon" href="assets/img/favicon/favicon.ico" type="image/x-icon" />
+
+  <link rel="stylesheet" type="text/css" href="assets/fonts/taco_salad.css">
+  <link rel="stylesheet" type="text/css" href="assets/styles/main.css">
+
+  <script src="assets/js/lib/jquery-2.2.3.min.js"></script>
+  <script src="assets/js/common/Carlos.js"></script>
+</head>
+<body>
+
+    <section id="container">
+        <div id="loader-screen" class="cover-full-parent">
+          <div id="pre-loader-wrapper">
+            <div class="pre-loader"></div>
+            Loading
+          </div>
+        </div>
+        <div id="door"></div>
+
+        <footer>
+            <div align='center'><a href='http://www.hit-counts.com'><img src='http://www.hit-counts.com/counter.php?t=MTM4NDA5Nw==' border='0' alt='Hit Counter'></a><br><a href='http://www.hit-counts.com'>Hit Counter</a></div>
+            <span id="author">By: Jordi Ortolá</span>
+        </footer>
+    </section>
+
+    <script>
+        $(document).ready(function() {
+          window.CARLOS = new Carlos(
+            "assets/audio/jarabe.mp3",
+            $('#door'),
+            DOOR_STATES.CLOSED,
+            hidePreLoader
+          );
+
+          CARLOS.play();
+
+
+          $(".meter > span").each(function() {
+            $(this)
+              .data("origWidth", $(this).width())
+              .width(0)
+              .animate({
+                width: $(this).data("origWidth") // or + "%" if fluid
+              }, 1200);
+          });
+        });
+
+        function hidePreLoader() {
+            $('#loader-screen').css('display', 'none');
+        }
+
+        function eventFire(el, etype){
+            if (el.fireEvent) {
+                el.fireEvent('on' + etype);
+            } else {
+                var evObj = document.createEvent('Events');
+                evObj.initEvent(etype, true, false);
+                el.dispatchEvent(evObj);
+            }
+        }
+    </script>
+</body>
+</html>
