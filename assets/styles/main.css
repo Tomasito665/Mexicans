@@ -1,9 +1,37 @@
-body {
-    background-color: #3F2860;
-    background-image: url("../img/bananas.png");
-    background-repeat: repeat;
+/* =========================== MAIN ============================ */
+body {background: url("../img/bananas.png") #3F2860 repeat}
+
+#container {
+    width: 100%;
+    height: 100%;
 }
 
+.cover-full-parent {
+    width: inherit;
+    height: inherit;
+    padding: inherit;
+    margin: inherit;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 999;
+}
+
+
+/* ========================== FOOTER =========================== */
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    color: grey;
+    font-size: 0.7em;
+}
+
+footer div img {width: 60px}
+footer div a   {font-size: 0.5em}
+
+
+/* =========================== DOOR ============================ */
 #door {
     position: absolute;
     margin: auto;
@@ -18,33 +46,6 @@ body {
 
 #door:not(opened) {background-position: 300px 0}
 #door.opened {background-position: 0 0}
-
-.cover-full-parent {
-    width: inherit;
-    height: inherit;
-    padding: inherit;
-    margin: inherit;
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: 999;
-}
-
-#container {
-    width: 100%;
-    height: 100%;
-}
-
-footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    color: grey;
-    font-size: 0.7em;
-}
-
-footer div img {width: 60px}
-footer div a   {font-size: 0.5em}
 
 
 /* ======================== PRE-LOADER ========================= */

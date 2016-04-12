@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- META INFO -->
   <meta charset="UTF-8">
   <title>Do not open the door</title>
+  <link rel="shortcut icon" href="assets/img/favicon/favicon.ico" type="image/x-icon" />
 
+  <!-- FACEBOOK META INFO -->
   <meta property="og:image" content="http://www.mexicans.eu/assets/img/preview.jpg" />
   <meta property="og:title" content="Do not open the door" />
   <meta property="og:description" content="Don't you dare..." />
 
-  <link rel="shortcut icon" href="assets/img/favicon/favicon.ico" type="image/x-icon" />
-
+  <!-- STYLESHEETS -->
   <link rel="stylesheet" type="text/css" href="assets/fonts/taco_salad.css">
   <link rel="stylesheet" type="text/css" href="assets/styles/main.css">
 
+  <!-- SCRIPTS -->
   <script src="assets/js/lib/jquery-2.2.3.min.js"></script>
   <script src="assets/js/common/Carlos.js"></script>
 </head>
@@ -43,30 +46,10 @@
           );
 
           CARLOS.play();
-
-
-          $(".meter > span").each(function() {
-            $(this)
-              .data("origWidth", $(this).width())
-              .width(0)
-              .animate({
-                width: $(this).data("origWidth") // or + "%" if fluid
-              }, 1200);
-          });
         });
 
         function hidePreLoader() {
             $('#loader-screen').css('display', 'none');
-        }
-
-        function eventFire(el, etype){
-            if (el.fireEvent) {
-                el.fireEvent('on' + etype);
-            } else {
-                var evObj = document.createEvent('Events');
-                evObj.initEvent(etype, true, false);
-                el.dispatchEvent(evObj);
-            }
         }
     </script>
 </body>
