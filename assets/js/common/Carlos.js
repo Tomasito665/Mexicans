@@ -11,8 +11,12 @@ function Carlos(audioURL, doorElement, doorState, onload) {
   doorState = doorState || DOOR_STATES['CLOSED'];
   this.onload = onload;
 
+  this.audioPlayer = new AudioPlayer(audioURL, onload, this.ctx);
+  this.audioPlayer.onended = function() {
+    // This code will run when music ended
+  };
+
   this.initNodes();
-  this._loadDoorSound(audioURL);
   this.initDoor(doorState);
 
   // Click handler
@@ -32,11 +36,11 @@ Carlos.prototype = {
   },
 
   open: function() {
-    this.AUDIO.connect(this.ctx.destination);
+    this.audioPlayer.connect(this.ctx.destination);
   },
 
   close: function() {
-    var AUDIO = this.AUDIO;
+    var AUDIO = this.audioPlayer;
     var FILTER = this.FILTER;
 
     AUDIO.disconnect();
@@ -45,7 +49,7 @@ Carlos.prototype = {
   },
 
   play: function() {
-    this.AUDIO.start();
+    this.audioPlayer.play();
   },
 
   initDoor: function(state) {
@@ -64,32 +68,5 @@ Carlos.prototype = {
     FILTER.type = "lowpass";
     FILTER.frequency.value = 300;
     this.FILTER = FILTER;
-
-    // Audio source node
-    this.AUDIO = ctx.createBufferSource();
-    this.AUDIO.loop = true;
-  },
-
-  _loadDoorSound: function(url, onload) {
-    var startTime = new Date().getTime();
-
-    var request = new XMLHttpRequest();
-    request.open('GET', url, true);
-    request.responseType = 'arraybuffer';
-
-    request.onload = function() {
-      var loadTime = new Date().getTime() - startTime;
-      console.log("Loaded sound in " + loadTime + " milliseconds");
-
-      console.log("Decoding sound");
-      this.ctx.decodeAudioData(request.response, function(buffer) {
-        this.AUDIO.buffer = buffer;
-        this.onload();
-        console.log("Decoded sound");
-      }.bind(this));
-    }.bind(this);
-
-    console.log("Loading sound");
-    request.send();
   }
 };

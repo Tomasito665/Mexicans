@@ -1,5 +1,5 @@
 Modernizr.addTest(
-  'AudioPlayOnlyOnGesture',
+  'audio_can_play_only_on_gesture',
 
   function() {
     var dummyAudio = new Audio(MEXICANS_AUDIO_URL);
