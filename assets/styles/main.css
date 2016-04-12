@@ -45,7 +45,7 @@ footer div a   {font-size: 0.5em}
 }
 
 #door:not(opened) {background-position: 300px 0}
-#door.opened {background-position: 0 0}
+#door.opened      {background-position: 0     0}
 
 
 /* ======================== PRE-LOADER ========================= */
@@ -76,7 +76,7 @@ footer div a   {font-size: 0.5em}
 }
 @keyframes spinnerPreloader {
     from {transform: rotate(0deg)}
-    to {transform: rotate(359deg)}
+    to {transform: rotate(-359deg)}
 }
 
 #loader-screen {
