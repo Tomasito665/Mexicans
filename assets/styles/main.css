@@ -72,7 +72,7 @@ footer div a   {font-size: 0.5em}
 
 @-webkit-keyframes spinnerPreloader {
     from {-webkit-transform: rotate(0deg)}
-    to   {-webkit-transform: rotate(359deg)}
+    to   {-webkit-transform: rotate(-359deg)}
 }
 @keyframes spinnerPreloader {
     from {transform: rotate(0deg)}
