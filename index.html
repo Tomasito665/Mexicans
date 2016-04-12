@@ -42,14 +42,13 @@
             "assets/audio/jarabe.mp3",
             $('#door'),
             DOOR_STATES.CLOSED,
-            hidePreLoader
+            onCarlosLoad
           );
-
-          CARLOS.play();
         });
 
-        function hidePreLoader() {
-            $('#loader-screen').css('display', 'none');
+        function onCarlosLoad() {
+          $('#loader-screen').css('display', 'none');
+          CARLOS.play();
         }
     </script>
 </body>
