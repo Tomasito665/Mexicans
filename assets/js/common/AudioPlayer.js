@@ -16,6 +16,9 @@ AudioPlayer.prototype = {
   loadAudio_node: function(url) {
     var ctx = this.ctx;
     this.audioNode = ctx.createBufferSource();
+    this.audioNode.onended = function() {
+      this.onended();
+    }.bind(this);
 
     var startTime = new Date().getTime();
 
