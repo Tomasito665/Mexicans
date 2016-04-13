@@ -6,15 +6,17 @@ var DOOR_STATES = {
   CLOSED: 'closed'
 };
 
+// TODO: Make a door object!!
+
 function Carlos(audioURL, doorElement, doorState, onload) {
   this.DOOR = doorElement;
   doorState = doorState || DOOR_STATES['CLOSED'];
   this.onload = onload;
+  this.sleeping = false;
+  this.doorOpened = false;
 
   this.audioPlayer = new AudioPlayer(audioURL, onload, this.ctx);
-  this.audioPlayer.onended = function() {
-    // This code will run when music ended
-  };
+  this.audioPlayer.onended = this.sleep.bind(this);
 
   this.initNodes();
   this.initDoor(doorState);
@@ -22,9 +24,13 @@ function Carlos(audioURL, doorElement, doorState, onload) {
   // Click handler
   var me = this;
   doorElement.click(function() {
-    $(this).toggleClass('opened');
-    var opened = $(this).hasClass('opened');
-    me.toggleDoor(opened);
+    me.doorOpened = !me.doorOpened;
+
+    if (me.sleeping && me.doorOpened)
+      $(this).toggleClass('sleeping', true);
+
+    $(this).toggleClass('opened', me.doorOpened);
+    me.toggleDoor(me.doorOpened);
   });
 }
 
@@ -68,5 +74,14 @@ Carlos.prototype = {
     FILTER.type = "lowpass";
     FILTER.frequency.value = 300;
     this.FILTER = FILTER;
+  },
+
+  // TODO: Make background and door two separate layers
+  sleep: function() {
+    $('#door')
+      .toggleClass("opened", false)
+      .toggleClass("sleeping", true);
+
+    this.sleeping = true;
   }
 };

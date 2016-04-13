@@ -44,9 +44,10 @@ footer div a   {font-size: 0.5em}
     background-image: url('../img/door.png');
 }
 
-#door:not(opened) {background-position: 300px 0}
-#door.opened      {background-position: 0     0}
 
+#door:not(.opened)            {background-position: 600px 0 !important}
+#door.opened                  {background-position: 0     0}
+#door.sleeping                {background-position: 300px 0}
 
 /* ======================== PRE-LOADER ========================= */
 .pre-loader {
