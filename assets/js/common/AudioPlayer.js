@@ -10,6 +10,8 @@ function AudioPlayer(url, onload, ctx) {
         this.loadAudio_node(url);
     else
         this.loadAudio_element(url);
+
+    console.log("End AudioPlayer constructor()");
 }
 
 AudioPlayer.prototype = {
@@ -50,8 +52,9 @@ AudioPlayer.prototype = {
 
         console.log("Loading sound (Audio DOM element)");
         audioElement = new Audio(url);
-        audioNode = ctx.createMediaElementSource(audioElement);
+        audioElement.load();
 
+        audioNode = ctx.createMediaElementSource(audioElement);
         $(audioElement).on('canplaythrough', function () {
             this.onload();
             this.ready = true;

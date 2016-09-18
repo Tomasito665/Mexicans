@@ -3,9 +3,11 @@ Modernizr.addTest(
 
     function () {
         var dummyAudio = new Audio(MEXICANS_AUDIO_URL);
-        dummyAudio.play();
+        var playPromise = dummyAudio.play();
         var canPlay = dummyAudio.paused;
-        dummyAudio.pause();
+        playPromise.then(function() {
+            dummyAudio.pause();
+        });
         return canPlay;
     }
 );
