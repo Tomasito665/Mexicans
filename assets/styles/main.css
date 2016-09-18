@@ -68,7 +68,7 @@ footer div a   {font-size: 0.5em}
     width: 336px;
     height: 300px;
     text-align: center;
-    font-family: tacos;
+    font-family: tacos, serif;
 }
 
 @-webkit-keyframes spinnerPreloader {
