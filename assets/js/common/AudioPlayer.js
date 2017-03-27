@@ -6,7 +6,7 @@ function AudioPlayer(url, onload, ctx) {
     this.audioNode = null;
     this.audioElement = null;
 
-    if (Modernizr.audio_can_play_only_on_gesture)
+    if (Modernizr.audio_element_can_autoplay)
         this.loadAudio_node(url);
     else
         this.loadAudio_element(url);
