@@ -55,9 +55,16 @@ Carlos.prototype = {
     },
 
     play: function () {
-        if (!this.audioPlayer.play()) {
-            this.showNotSupportedMsg();
-        }
+        this.audioPlayer.play(function(err) {
+            if (!err) return;
+
+            if (err instanceof AudioPlayer.prototype.PlayingError) {
+                this.showNotSupportedMsg();
+                return;
+            }
+
+            throw err;
+        }.bind(this));
     },
 
     initDoor: function (state) {

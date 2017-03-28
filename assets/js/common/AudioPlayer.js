@@ -79,18 +79,44 @@ AudioPlayer.prototype = {
         this.audioElement = audioElement;
     },
 
-    play: function () {
-        if (this.audioElement) {
-            this.audioElement.play();
-            if (this.audioElement.paused)
-                return false;
-        } else {
-            this.audioNode.start();
-            if (this.ctx.state === 'suspended')
-                return false;
+    /**
+     * Play audio async. A callback function should be provided taking one error argument.
+     */
+    play: function (callback) {
+        var audioElement = this.audioElement;
+
+        try {
+            // If audio loaded with loadAudio_element
+            if (audioElement) {
+                audioElement.play();
+                setTimeout(function() {
+                    var err = undefined;
+                    if (audioElement.paused) {
+                        err = new AudioPlayer.prototype
+                            .PlayingError('AudioElement paused');
+                    }
+
+                    callback(err);
+                }, 0);
+            }
+
+            // If audio loaded with loadAudio_node
+            else {
+                this.audioNode.start();
+                setTimeout(function() {
+                    var err = undefined;
+                    if (this.ctx.state === 'suspended') {
+                        err = new AudioPlayer.prototype
+                            .PlayingError('AudioContext suspended');
+                    }
+
+                    callback(err);
+                }.bind(this), 0);
+            }
+        } catch (e) {
+            callback(e);
         }
 
-        return true;
     },
 
     connect: function (audioNode) {
@@ -101,3 +127,6 @@ AudioPlayer.prototype = {
         this.audioNode.disconnect();
     }
 };
+
+AudioPlayer.prototype.PlayingError = function(msg) { this.message = (msg || "") };
+AudioPlayer.prototype.PlayingError.prototype = new Error();
