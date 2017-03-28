@@ -55,13 +55,15 @@ Carlos.prototype = {
     },
 
     play: function () {
-        this.audioPlayer.play();
+        if (!this.audioPlayer.play()) {
+            this.showNotSupportedMsg();
+        }
     },
 
     initDoor: function (state) {
         var opened = null;
-        if (state == DOOR_STATES['OPENED']) opened = true;
-        if (state == DOOR_STATES['CLOSED']) opened = false;
+        if (state === DOOR_STATES['OPENED']) opened = true;
+        if (state === DOOR_STATES['CLOSED']) opened = false;
         this.DOOR.toggleClass('opened', opened);
         this.toggleDoor(opened);
     },
@@ -83,5 +85,9 @@ Carlos.prototype = {
             .toggleClass("sleeping", true);
 
         this.sleeping = true;
+    },
+
+    showNotSupportedMsg: function () {
+        alert('I am so sorry, but Mexicans.eu does not work on your device.. (it doesn\'t work on iOS)');
     }
 };

@@ -71,10 +71,15 @@ AudioPlayer.prototype = {
     play: function () {
         if (this.audioElement) {
             this.audioElement.play();
-        }
-        else {
+            if (this.audioElement.paused)
+                return false;
+        } else {
             this.audioNode.start();
+            if (this.ctx.state === 'suspended')
+                return false;
         }
+
+        return true;
     },
 
     connect: function (audioNode) {
