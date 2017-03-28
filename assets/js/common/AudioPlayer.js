@@ -28,11 +28,6 @@ function AudioPlayer(url, onload, ctx) {
 AudioPlayer.prototype = {
     loadAudio_node: function (url) {
         var ctx = this.ctx;
-        this.audioNode = ctx.createBufferSource();
-        this.audioNode.onended = function () {
-            this.onended();
-        }.bind(this);
-
         var startTime = new Date().getTime();
 
         var request = new XMLHttpRequest();
@@ -45,10 +40,18 @@ AudioPlayer.prototype = {
 
             console.log("Decoding sound");
             ctx.decodeAudioData(request.response, function (buffer) {
-                this.audioNode.buffer = buffer;
-                this.onload();
+
+                // Setup audio buffer source node
+                var audioNode = ctx.createBufferSource();
+                audioNode.buffer = buffer;
+                audioNode.onended = function() {
+                    this.onended();
+                }.bind(this);
+                this.audioNode = audioNode;
+
                 this.ready = true;
-                console.log("Decoded sound");
+                this.onload();
+                console.log("Sound decoded");
             }.bind(this));
         }.bind(this);
 
