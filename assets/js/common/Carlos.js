@@ -42,15 +42,24 @@ Carlos.prototype = {
     },
 
     open: function () {
-        this.audioPlayer.connect(this.ctx.destination);
+        if (!this.audioPlayer.connect(this.ctx.destination)) {
+            console.warn('Couldn\'t connect audio player to destination')
+        }
     },
 
     close: function () {
         var AUDIO = this.audioPlayer;
         var FILTER = this.FILTER;
 
-        AUDIO.disconnect();
-        AUDIO.connect(FILTER);
+
+        if (!AUDIO.disconnect()) {
+            console.warn('Couldn\'t disconnect audio player');
+        }
+
+        if (!AUDIO.connect(FILTER)) {
+            console.warn('Couldn\'t connect audio player to filter');
+        }
+
         FILTER.connect(this.ctx.destination);
     },
 

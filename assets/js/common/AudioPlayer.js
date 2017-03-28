@@ -67,8 +67,8 @@ AudioPlayer.prototype = {
 
         audioNode = ctx.createMediaElementSource(audioElement);
         $(audioElement).on('canplaythrough', function () {
-            this.onload();
             this.ready = true;
+            this.onload();
         }.bind(this));
 
         $(audioElement).on('ended', function () {
@@ -120,11 +120,15 @@ AudioPlayer.prototype = {
     },
 
     connect: function (audioNode) {
-        this.audioNode.connect(audioNode);
+        var isReady = this.ready;
+        isReady && this.audioNode.connect(audioNode);
+        return isReady;
     },
 
     disconnect: function () {
-        this.audioNode.disconnect();
+        var isReady = this.ready;
+        isReady && this.audioNode.disconnect();
+        return isReady;
     }
 };
 
