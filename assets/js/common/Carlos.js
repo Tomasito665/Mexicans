@@ -8,10 +8,11 @@ var DOOR_STATES = {
 
 // TODO: Make a door object!!
 
-function Carlos(audioURL, doorElement, doorState, onload) {
+function Carlos(audioURL, doorElement, doorState, onload, onMissingFeature) {
     this.DOOR = doorElement;
     doorState = doorState || DOOR_STATES['CLOSED'];
     this.onload = onload;
+    this.onMissingFeature = onMissingFeature;
     this.sleeping = false;
     this.doorOpened = false;
 
@@ -73,7 +74,7 @@ Carlos.prototype = {
             if (!err) return;
 
             if (err instanceof AudioPlayer.prototype.PlayingError) {
-                this.showNotSupportedMsg();
+                this.onMissingFeature();
                 return;
             }
 
@@ -106,9 +107,5 @@ Carlos.prototype = {
             .toggleClass("sleeping", true);
 
         this.sleeping = true;
-    },
-
-    showNotSupportedMsg: function () {
-        alert('I am so sorry, but Mexicans.eu does not work on your device.. (it doesn\'t work on iOS)');
     }
 };
