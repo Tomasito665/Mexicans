@@ -15,11 +15,16 @@ function Carlos(audioURL, doorElement, doorState, onload) {
     this.sleeping = false;
     this.doorOpened = false;
 
-    this.audioPlayer = new AudioPlayer(audioURL, onload, this.ctx);
-    this.audioPlayer.onended = this.sleep.bind(this);
+    this.audioPlayer = new AudioPlayer(audioURL, function() {
+        // Lazy initialize nodes, otherwise the nodes might be already
+        // inactive if loading takes too long (Safari)
+        this.initNodes();
+        this.initDoor(doorState); // Filter init and node connections
 
-    this.initNodes();
-    this.initDoor(doorState);
+        // Carlos' onLoad
+        onload();
+    }.bind(this), this.ctx);
+    this.audioPlayer.onended = this.sleep.bind(this);
 
     // Click handler
     var me = this;
