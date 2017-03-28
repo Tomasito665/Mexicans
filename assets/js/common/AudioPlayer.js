@@ -1,3 +1,13 @@
+var chrome   = navigator.userAgent.indexOf('Chrome') > -1;
+var explorer = navigator.userAgent.indexOf('MSIE') > -1;
+var firefox  = navigator.userAgent.indexOf('Firefox') > -1;
+var safari   = navigator.userAgent.indexOf("Safari") > -1;
+var camino   = navigator.userAgent.indexOf("Camino") > -1;
+var opera    = navigator.userAgent.toLowerCase().indexOf("op") > -1;
+if ((chrome) && (safari)) safari = false;
+if ((chrome) && (opera)) chrome = false;
+
+
 function AudioPlayer(url, onload, ctx) {
     this.ready = false;
     this.onload = onload;
@@ -6,10 +16,11 @@ function AudioPlayer(url, onload, ctx) {
     this.audioNode = null;
     this.audioElement = null;
 
-    if (Modernizr.audio_element_can_autoplay)
+    if (!Modernizr.audio_element_can_autoplay || safari) {
         this.loadAudio_node(url);
-    else
+    } else {
         this.loadAudio_element(url);
+    }
 
     console.log("End AudioPlayer constructor()");
 }
